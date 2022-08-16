@@ -1,18 +1,28 @@
 package gowatermark
 
 import (
-	"fmt"
 	"os"
 )
 
-func createDir(path string) (string, error) {
-	var dirs = fmt.Sprintf("%s/", path)
-	_, err := os.Stat(dirs)
+func createDir(dir string) (error) {
+	_, err := os.Stat(dir)
 	if err != nil {
-		err = os.MkdirAll(dirs, os.ModePerm)
+		err = os.MkdirAll(dir, os.ModePerm)
 		if err != nil {
-			return "", err
+			return err
 		}
 	}
-	return dirs, nil
+	return nil
 }
+
+
+func isExistPath(path string) bool {  
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsExist(err) {  
+			return true  
+		}  
+		return false  
+	}  
+	return true  
+}  
